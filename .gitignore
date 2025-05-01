@@ -1,0 +1,8 @@
+data/cache/
+
+# Python junk
+__pycache__/
+*.pyc
+
+# Jupyter autosaves
+.ipynb_checkpoints/
