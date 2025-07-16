@@ -27,6 +27,12 @@ def preprocess(df, categorical_cols, drop_cols, target_col):
     drop_cols = [col for col in drop_cols if col in df.columns]
     X = df.drop(drop_cols + [target_col], axis=1)
     y = df[target_col]
+    # Convert all columns to numeric, coerce errors to NaN then fill with -1
+    for col in X.columns:
+        X[col] = pd.to_numeric(X[col], errors='coerce')
+    X = X.fillna(-1)
+    # Drop any columns that are still not numeric
+    X = X.select_dtypes(include=[np.number])
     return X, y, encoders
 
 def train_and_evaluate(X, y, model_name, save_path):
